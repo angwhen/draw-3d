@@ -6,14 +6,17 @@ import javax.swing.*;
 
 public class Drawing extends JFrame implements MouseListener{
 	private ArrayList<Line> myDrawing = new ArrayList<Line>();
+	private ArrayList<Line> guidelines = new ArrayList<Line>();
 	private double theta = 0;
 	private double phi = 0;
-	private boolean showGuides = true;
 	
 	public Drawing(){
 		super();
 		addMouseListener(this);
-	
+		guidelines.add(new Line(new Point(-800,0,0),new Point(800,0,0)));
+		guidelines.add(new Line(new Point(0,-800,0),new Point(0,800,0)));
+		guidelines.add(new Line(new Point(0,0,-800),new Point(0,0,800)));
+		
 		//pyramid
 		/*myDrawing.add(new Line(new Point(-100,0,-100),new Point(100,0,-100)));
 		myDrawing.add(new Line(new Point(-100,0,-100),new Point(-100,0,100)));
@@ -43,42 +46,18 @@ public class Drawing extends JFrame implements MouseListener{
 
 	// kind of confused about this .. dont think can draw like this
 	public void paintGuidelines(Graphics g) {
-		//draw Y lines, horizontal
 		g.setColor(Color.RED);
-		for (int i = 0; i < 1600; i+=40) {
-			g.drawLine(0,i,1600,i);
-		}
-		g.drawLine(0,801,1600,801);
-		g.drawLine(0,799,1600,799);
-		
-		//draw Z lines, vertical;
-		g.setColor(Color.BLUE);
-		for (int i = 0; i < 1600; i+=40) {
-			g.drawLine(i,0,i,1600);
-		}
-		g.drawLine(801,0,801,1600);
-		g.drawLine(799,0,799,1600);
-		
-		//draw X lines, diagonal
-		g.setColor(Color.GREEN);
-		for (int i = 0; i < 1600; i+=80) {
-			g.drawLine(0,i,i,0);
-		}
-		for (int i = 0; i < 1600; i+=80) {
-			g.drawLine(i,1600,1600,i);
-		}
-		g.drawLine(0,1601,1601,0);
-		g.drawLine(0,1599,1599,0);
-		
-		
+		for (Line line: guidelines) {
+			Point a = rotate(line.getA(),theta,phi);
+			Point b = rotate(line.getB(),theta,phi);
+			g.drawLine(a.x(),a.y(),b.x(),b.y());
+		}	
 	}
 	
 	public void paint(Graphics g){
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, 1600, 1600);
-		if (showGuides) {
-			paintGuidelines(g);
-		}
+		paintGuidelines(g);
 		g.setColor(Color.BLACK);
 		for (Line line: myDrawing) {
 			Point a = rotate(line.getA(),theta,phi);
