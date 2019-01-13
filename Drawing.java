@@ -6,9 +6,10 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Drawing extends JFrame implements MouseListener{
+public class Drawing extends Canvas implements MouseListener{
 	private static final long serialVersionUID = 1L;
 	private static int frameWidth = 1000;
+	private int axisWidth= frameWidth/2;
 	private ArrayList<DrawableObject> myDrawing = new ArrayList<DrawableObject>();
 	private ArrayList<Line> guidelines = new ArrayList<Line>();
 	private double theta = 0;
@@ -54,15 +55,17 @@ public class Drawing extends JFrame implements MouseListener{
 	}
 	
 	private void initGuidelines() {
-		int halfFrameWidth = frameWidth/2;
-		guidelines.add(new Line(new Point(-halfFrameWidth,0,0),new Point(halfFrameWidth,0,0),5));
-		guidelines.add(new Line(new Point(0,-halfFrameWidth,0),new Point(0,halfFrameWidth,0),5));
-		guidelines.add(new Line(new Point(0,0,-halfFrameWidth),new Point(0,0,halfFrameWidth),5));
+		int half = frameWidth/2;
+		int end = half*2/3;
+
+		guidelines.add(new Line(new Point(axisWidth, -end,0,0),new Point(axisWidth,end,0,0),5,Color.RED));//X
+		guidelines.add(new Line(new Point(axisWidth,0,-end,0),new Point(axisWidth,0,end,0),5,Color.BLUE)); //Y
+		guidelines.add(new Line(new Point(axisWidth,0,0,-end),new Point(axisWidth,0,0,end),5,Color.RED)); //Z
 	}
 	
 
 	public void paintGuidelines(Graphics g) {
-		g.setColor(Color.RED);
+		
 		for (Line line: guidelines) {
 			Line toDraw = (Line) line.rotated(theta,phi);
 			toDraw.draw(g);
@@ -70,6 +73,7 @@ public class Drawing extends JFrame implements MouseListener{
 	}
 	
 	public void paint(Graphics g){
+		
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, frameWidth, frameWidth);
 		
@@ -84,10 +88,11 @@ public class Drawing extends JFrame implements MouseListener{
 
 
 	public static void main(String[] arg){
-		Drawing frame = new Drawing();
-
-		frame.setSize(frameWidth,frameWidth);
-		frame.setVisible(true);
+		 JFrame frame = new JFrame("My Drawing"); 
+		 Canvas canvas = new Drawing(); 
+		 canvas.setSize(frameWidth, frameWidth); 
+		 frame.add(canvas); frame.pack(); 
+		 frame.setVisible(true);
 	}
 	
 	@Override

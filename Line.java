@@ -1,38 +1,45 @@
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Line implements DrawableObject{
 	private Point a,b;
 	private int thickness;
+	private Color color;
 	
-	public Line(Point a, Point b) {
+	public Line( Point a, Point b) {
 		this.a = a;
 		this.b = b;
 		this.thickness = 0;
+		this.color = Color.BLACK;
 	}
+	
 	public Line(Point a, Point b, int thickness) {
 		this.a = a;
 		this.b = b;
 		this.thickness = thickness;
+		this.color = Color.BLACK;
 	}
 	
-	public Point getA() {
-		return a;
-	}
-	public Point getB() {
-		return b;
+	public Line(Point a, Point b, int thickness, Color color) {
+		this.a = a;
+		this.b = b;
+		this.thickness = thickness;
+		this.color = color;
 	}
 	
 	
 	public Line rotated(double theta, double phi) {
-		return new Line(a.rotated(theta,phi),b.rotated(theta,phi),thickness);
+		return new Line(a.rotated(theta,phi),b.rotated(theta,phi),thickness,color);
 	}
 	
 	public void draw(Graphics g){
+		g.setColor(color);
+	
 		if (thickness <= 0) {
-			g.drawLine(a.x(),a.y(),b.x(),b.y());
+			g.drawLine(a.drawableX(),a.drawableY(),b.drawableX(),b.drawableY());
 		}else {
-			int[] xPts = {a.x(),a.x()+thickness,b.x()+thickness,b.x()};
-			int[] yPts = {a.y(),a.y()+thickness,b.y()+thickness,b.y()};
+			int[] xPts = {a.drawableX(),a.drawableX()+thickness,b.drawableX()+thickness,b.drawableX()};
+			int[] yPts = {a.drawableY(),a.drawableY()+thickness,b.drawableY()+thickness,b.drawableY()};
 			g.fillPolygon(xPts,yPts,4);
 		}
 	}
