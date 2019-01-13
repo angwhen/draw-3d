@@ -2,22 +2,17 @@ import java.awt.Graphics;
 
 public class Circle implements DrawableObject{
 	private Point center;
-	private int radius;
+	private Point topEdge, rightEdge;
+
 	
-	public Circle(Point center, int radius) {
+	public Circle(Point center, Point edgePoint) {
 		this.center = center;
-		this.radius = radius;
+		int radius = center.distance(edgePoint);
+		
 	}
-	
-	public Point getCenter() {
-		return center;
-	}
-	public int getRadius() {
-		return radius;
-	}
-	
+
 	public void draw(Graphics g){
-		 g.fillOval((int)center.getX(),(int)center.getY(),radius,radius);
+		//too advanced for me to do rn, can't just use oval
 	}
 
 	@Override

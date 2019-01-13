@@ -21,6 +21,11 @@ public class Point implements DrawableObject{
 		return (int) y + axisWidth;
 	}
 	
+	
+	public int distance(Point p2) {
+		return (int) Math.sqrt((x-p2.x)*(x-p2.x) + (y-p2.y)*(y-p2.y) + (z-p2.z)*(z-p2.z));
+	}
+	
 	private double[][] rotationMatrix(double angle){
 		double[][] r = {{Math.cos(angle),-Math.sin(angle)},{Math.sin(angle),Math.cos(angle)}};
 		return r;

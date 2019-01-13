@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.*;
 
-public class Drawing extends Canvas implements MouseListener{
+public class Drawing extends Canvas {
 	private static final long serialVersionUID = 1L;
 	private static int frameWidth = 1000;
 	private int axisWidth= frameWidth/2;
@@ -42,17 +42,50 @@ public class Drawing extends Canvas implements MouseListener{
 		public void keyTyped(KeyEvent e) {
 		}
 	}
+	
+	public class MyMouseListener implements MouseListener{
+		private int centerX, centerY, radius;
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {	
+			centerX = e.getX();
+	        centerY = e.getY();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			
+			//make a square object
+		}
+	}
 
 	
 	public Drawing(){
 		super();
-		addMouseListener(this);
 		initGuidelines();
 		
 		this.requestFocus();
-		KeyListener listener = new MyKeyListener();
-		this.addKeyListener(listener);
+		KeyListener kListener = new MyKeyListener();
+		this.addKeyListener(kListener);
+		
+		MouseListener mListener = new MyMouseListener();
+		this.addMouseListener(mListener);
 	}
+	
 	
 	private void initGuidelines() {
 		int half = frameWidth/2;
@@ -65,7 +98,6 @@ public class Drawing extends Canvas implements MouseListener{
 	
 
 	public void paintGuidelines(Graphics g) {
-		
 		for (Line line: guidelines) {
 			Line toDraw = (Line) line.rotated(theta,phi);
 			toDraw.draw(g);
@@ -95,37 +127,6 @@ public class Drawing extends Canvas implements MouseListener{
 		 frame.setVisible(true);
 	}
 	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		int x = e.getX();
-        int y = e.getY();
-        
-	}
-	
-	
-	
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 
 }
