@@ -20,6 +20,13 @@ public class Line implements DrawableObject{
 		this.color = Color.BLACK;
 	}
 	
+	public Line(Point a, Point b, Color color) {
+		this.a = a;
+		this.b = b;
+		this.thickness = 0;
+		this.color = color;
+	}
+	
 	public Line(Point a, Point b, int thickness, Color color) {
 		this.a = a;
 		this.b = b;

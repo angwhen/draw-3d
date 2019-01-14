@@ -44,7 +44,7 @@ public class Drawing extends Canvas {
 	}
 	
 	public class MyMouseListener implements MouseListener{
-		private int centerX, centerY, radius;
+		private int centerX, centerY;
 		@Override
 		public void mouseClicked(MouseEvent e) {
 		
@@ -66,10 +66,14 @@ public class Drawing extends Canvas {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			int x = e.getX();
-			int y = e.getY();
+			int cornerX = e.getX();
+			int cornerY = e.getY();
 			
-			//make a square object
+			Point p1 = new Point(axisWidth,centerX,centerY,0);
+			Point p2 = new Point(axisWidth,cornerX,cornerY,0);
+			Square square = new Square(p1.shifted(-axisWidth, -axisWidth, 0).rotated(-theta,-phi),
+					p2.shifted(-axisWidth, -axisWidth, 0).rotated(-theta,-phi));
+			myDrawing.add(square);
 		}
 	}
 
@@ -93,7 +97,7 @@ public class Drawing extends Canvas {
 
 		guidelines.add(new Line(new Point(axisWidth, -end,0,0),new Point(axisWidth,end,0,0),5,Color.RED));//X
 		guidelines.add(new Line(new Point(axisWidth,0,-end,0),new Point(axisWidth,0,end,0),5,Color.BLUE)); //Y
-		guidelines.add(new Line(new Point(axisWidth,0,0,-end),new Point(axisWidth,0,0,end),5,Color.RED)); //Z
+		guidelines.add(new Line(new Point(axisWidth,0,0,-end),new Point(axisWidth,0,0,end),5,Color.GREEN)); //Z
 	}
 	
 
@@ -113,8 +117,9 @@ public class Drawing extends Canvas {
 		
 		g.setColor(Color.BLACK);
 		for (DrawableObject o: myDrawing) {
-			Line toDraw = (Line)o.rotated(theta,phi);
+			DrawableObject toDraw = (DrawableObject)o.rotated(theta,phi);
 			toDraw.draw(g);
+			//System.out.println("drew" + o);
 		}		
 	}
 

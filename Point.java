@@ -11,6 +11,10 @@ public class Point implements DrawableObject{
 		this.z = z ;
 	}
 	
+	public int axisWidth() {
+		return axisWidth;
+	}
+	
 	/**
 	 * @return x coordinate to draw
 	 */
@@ -39,6 +43,11 @@ public class Point implements DrawableObject{
 		
 		r = rotationMatrix(phi);
 		return new Point(axisWidth, t.x, r[0][0]*t.y+r[0][1]*t.z, r[1][0]*t.y+r[1][1]*t.z);	
+	}
+	
+	
+	public Point shifted(int x, int y, int z) {
+		return new Point(axisWidth, this.x+x,this.y+y,this.z+z);
 	}
 	
 	public void draw(Graphics g){
